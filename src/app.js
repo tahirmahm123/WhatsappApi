@@ -22,7 +22,7 @@ create(
         },
         undefined, // statusFind
         {
-            headless: false,
+            headless: true,
             browserArgs: ["--user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'"], // Original parameters  ---Parameters to be added into the chrome browser instance
             multidevice: true,
             useChrome: false,
