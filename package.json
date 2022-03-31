@@ -17,6 +17,6 @@
     "express": "^4.17.3",
     "helmet": "^5.0.2",
     "nodemon": "^2.0.15",
-    "venom-bot": "^4.0.7"
+    "venom-bot": "^4.0.9"
   }
 }
