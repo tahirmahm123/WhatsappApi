@@ -9,18 +9,14 @@ require('dotenv').config();
 const { create } = require("venom-bot");
 const axios = require("axios");
 app.use(express.json());
-const urlWebhook = process.env.WEBHOOK_URL;
-const urlExpiry = process.env.EXPIRY_URL;
-console.log("Webhook URL: ", urlWebhook);
-console.log("Expiry URL: ", urlExpiry);
+const urlBot = process.env.BOT_URL;
+console.log("Bot URL: ", urlBot);
 create(
-        "business", // session
+        "business-bot", // session
         (base64Qr, asciiQR, attempts, urlCode) => {
             console.log('Number of attempts to read the qrcode: ', attempts);
-            console.log('Terminal qrcode: ', asciiQR);
-            // console.log('base64 image string qrcode: ', base64Qr);
-            // console.log('urlCode (data-ref): ', urlCode);
-            // console.log(asciiQR); // Optional to log the QR in the terminal
+            console.log('Terminal qrcode: ');
+            console.log(asciiQR);
         },
         undefined, // statusFind
         {
@@ -46,28 +42,16 @@ function start(client) {
         console.log(axiosData);
 
         axios({
-            url: urlWebhook,
+            url: urlBot,
             method: "post",
             data: axiosData
         }).then(async (res) => {
             console.log(res.data);
-            let {from} = axiosData;
+            /*let {from} = axiosData;
             await client
-                .sendText(from, res.data)
+                .sendText(from, res.data)*/
         })
         .catch(err => console.log(err))
     });
-    app.post("/expiry", async (req, res) => {
-        let response = await axios.get(urlExpiry)
-        let data = response.data;
-        console.log(response);
-        data.forEach(async (value) => await client .sendText(value.number, value.message))
-        res.send(JSON.stringify(data));
-    });
 }
-app.get("/", function (req, res) {
-    res.redirect("https://onionlite.com");
-})
-app.listen(4000, () => {
-    console.log("server running on port: 4000");
-})
+app.listen(4000, () => { console.log("server running on port: 4000"); })
